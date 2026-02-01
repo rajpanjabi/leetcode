@@ -105,6 +105,60 @@ class Solution:
 
 ```
 
+### Quick Sort
+
+This is also a recursive algorithm, it takes O(nlogn) time and O(1) space. However, this algorithm is not stable, that is if duplicates in the array, the relative order may not hold true in final sorted array. Also time complexity heavily relies on how pivot is chose.
+
+Steps:
+Choose a pivot(usually the first or alst element)
+Now take i and j pointers from start+1 and n-1 positions. Until they cross each other, swap pairs. the pairs would be element higher than pivot on left and element smaller then pivot on right. these values are swapped and we move i and j. Continue until i`<`j. Finally swap the pivot and the val at j the index, so pivot is at its right place
+
+
+
+```python
+class Solution:
+    def QuickSort(nums:list[int])->list(int):
+        n=len(arr)
+
+        def partition(low:int, high:int)->int:
+            pivot=nums[low]
+            # lets take 1st elt as the pivot
+            i,j=low-1,high+1
+            while i<j:
+                # find elt greater than that at pivot using i from start
+                while nums[i]<=pivot and i<low-1 :
+                    i+=1
+                # find elt smaller than that at pivot using j from back
+                while nums[j]>pivot and j>=low+1:
+                    j-=1
+
+                # if they are valid i<j then swap 
+                if i<j:
+                    nums[i],nums[j]=nums[j],nums[i]
+            
+            # once the loop ends, place the pivot at its correct place i.e where j stands (the last smaller elt than pivot )
+            nums[low],nums[j]=nums[j],nums[low]
+
+
+
+
+        # init starts with low=0 and high =len(nums)-1
+        def qs(low,high):
+            # if just one elt already sorted (low==high)
+            if low<high:
+                partitionIdx=partition(low,high)
+                # recrusively sort the left and right halves
+                left=qs(low,partionIdx-1)
+                right=qs(partionIdx+1,high)
+        
+        qs(0,len(nums)-1)
+        return nums
+
+
+
+
+```
+
 
 ## Arrays
 
@@ -690,7 +744,17 @@ Optimised
 Brute Force similar to all prev problems (O(n^2))
 
 Optimised: O(n)
-Think intuitively at each index what will be the maxP, consider all cases, neagtives (odd and even nos), zeroes. At the end it will be max of either suffix or prefix. In case of zero it makes sense to reset the values back to 1.
+
+
+For this question, first think if all numbers are positive, then the maxproduct is product of all elements, if negative numbers then? if even nos of negatives then also product of all numbers. if there are odd nos of negative numbers, we need to exclude one neagtive number, and take the product on either left side or right side of that element.
+So we need to calculate prefix and suffix product. Now at each index we find the max of left(prefix) and right(suffix), and then compare this with the global max. this helps us in finding maxProduct
+
+Now if we have zeroes then, what to do? does it change anything ? yes it does. it divides the array into multiple components [-4,2,3,5,0,9,-4,2,-3,0,1,5,2]. here 0 divides the array into 3 components, the maxProduct subarray would be on the left or right og the zeores, so when we calculate the prefix and suffix, we reset the products to 1 when we encounter a 0, so that we start fresh and now see if the new subarray has maxProduct. 
+
+
+
+
+Think intuitively at each index what will be the maxP, consider all cases, negatives (odd and even nos), zeroes. At the end it will be max of either suffix or prefix. In case of zero it makes sense to reset the values back to 1.
 
 ```python
 class Solution:
@@ -699,7 +763,33 @@ class Solution:
         # the idea here is:
         # if an array has all positives, then the answer would be product of all elements,
         # if has positives and even nos of negatives then also same,
-        # if odd nos of negatives then, it will not consider one negative and the answer would be on the left of that isolated negatie or on its right. in case of zeroes we reninit the sum as 1
+        # if odd nos of negatives then,
+        # the answer is either on left side or on the right side right?  [5,-1,8], here answer is either 5 or 8, for [4,-2,-1,-3,4]
+
+        
+        # it will not consider one negative and the answer would be on the left of that isolated negatie or on its right. in case of zeroes we reninit the sum as 1
+
+        # so we need prefix and suffix right
+        n=len(nums)
+        prefix=1
+        suffix=1
+        for i in range(n):
+            prefix*=nums[i]
+            suffix*=nums[n-1-i]
+            
+
+
+
+
+
+
+
+
+
+
+
+3`1289cvb nm,.
+        # More concise and one iteration
         prefix=1
         suffix=1
         maxP=float('-inf')
@@ -715,6 +805,20 @@ class Solution:
 ```
 
 
+the reason why only prefix product would not work:
+Now consider nums = [3, -2, 5].
+
+Prefix Loop:
+
+i = 0: prefix = 3, maxP = 3
+
+i = 1: prefix = -6, maxP = 3
+
+i = 2: prefix = -30, maxP = 3
+
+Result: 3
+
+In that second example ([3, -2, 5]), the prefix loop got "stuck" with a negative product because of that single -2. It couldn't "see" that 5 on its own (or 3 on its own) was better than the whole product.
 
 
 
@@ -727,7 +831,7 @@ class Solution:
 
 In Brute Force, I try all the possible subarrays, I maintian a running sum for subarray starting from each index(i) and ending at variable indices(j) and fianlly check if the maxSum needs to be updated
 
-For Kadane's algorithm which is the optimal version for this problem, the base idea is relatively simple, You iterate once trhought ht array and you maintian two variables ,one is the global maxSUm and one is the running sum. At each iteration, you add the curr elt's val to the runningsum , now you update the maxsum if required , finally you update the currsum =0 incase if it goes below zero. We do this because if the currsum goes below zero, it wouldnt' help us in finding maxsum anymore, it will rather diminish our returns in future sum too, so its better to start fresh
+For Kadane's algorithm which is the optimal version for this problem, the base idea is relatively simple, You iterate once throughout array and you maintian two variables ,one is the global maxSUm and one is the running sum. At each iteration, you add the curr elt's val to the runningsum , now you update the maxsum if required , finally you update the currsum =0 incase if it goes below zero. We do this because if the currsum goes below zero, it wouldnt' help us in finding maxsum anymore, it will rather diminish our returns in future sum too, so its better to start fresh
 
 ```python
     def maxSubArray(self, nums: List[int]) -> int:
@@ -1478,6 +1582,74 @@ class Solution:
                 l=mid+1
 
 ```
+
+### Minimize Max Distance to Gas Station
+
+Given a sorted array arr of size n, containing integer positions of n gas stations on the X-axis, and an integer k, place k new gas stations on the X-axis.
+
+The new gas stations can be placed anywhere on the non-negative side of the X-axis, including non-integer positions.
+
+Let dist be the maximum distance between adjacent gas stations after adding the k new gas stations.
+
+Find the minimum value of dist.
+
+Your answer will be accepted if it is within 1e-6 of the true value.
+
+
+Example 1
+
+Input: n = 10, arr = [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10], k = 10
+
+Output: 0.50000
+
+Explanation:
+
+One of the possible ways to place 10 gas stations is [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10].
+
+Thus the maximum difference between adjacent gas stations is 0.5.
+
+Hence, the value of dist is 0.5.
+
+It can be shown that there is no possible way to add 10 gas stations in such a way that the value of dist is lower than this.
+
+
+```python
+class Solution:
+    def minimiseMaxDistance(self, arr, k):
+        n = len(arr)
+        # Store: (-max_distance_in_segment, segment_length, num_stations_placed)
+        heap = []
+        
+        for i in range(1, n):
+            segment_length = arr[i] - arr[i-1]
+            # Initially 0 stations in each segment
+            # Max distance = segment_length / (0 + 1) = segment_length
+            heapq.heappush(heap, (-segment_length, segment_length, 0))
+        
+        # Place k gas stations
+        for _ in range(k):
+            # Get segment with maximum distance
+            max_dist, original_length, stations = heapq.heappop(heap)
+            
+            # Add one more station to this segment
+            stations += 1
+            
+            # New max distance in this segment after adding one station
+            new_max_dist = original_length / (stations + 1)
+            
+            # Push back with updated count
+            heapq.heappush(heap, (-new_max_dist, original_length, stations))
+        
+        # The answer is the maximum distance among all segments
+        return -heap[0][0]
+
+```
+Above solution takes O(nlogn +klogn)
+
+
+
+
+
 
 
 ## Sliding Window
