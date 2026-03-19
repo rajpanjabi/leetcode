@@ -218,7 +218,7 @@ class Dog implements Animal {
 
 #### Interfaces
 
-Interfaces are pure contracts. They only had abstract methods and abstract final variables (constants), but after Java 8, they introduced default methods that helps in backward compatibility i.e if a new default method is introduced in interface it will not break the logic of all the subclasses that implements this interface, we can add logic in this default method which can be used by all these sub-classes.
+Interfaces are pure contracts. They only have abstract methods and abstract final variables (constants), but after Java 8, they introduced default methods that helps in backward compatibility i.e if a new default method is introduced in interface it will not break the logic of all the subclasses that implements this interface, we can add logic in this default method which can be used by all these sub-classes.
 
 **Imp diff between Concrete and Default Methods**
 

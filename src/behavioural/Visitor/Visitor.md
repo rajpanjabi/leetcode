@@ -1,0 +1,5 @@
+
+Visitor pattern is used when we wish to introduce functionality into an existing class without modifying it. To achieve this we create a Visitor Interface which is then implemented by all the new functionality. This interface provides with a contract that forces all the functionality objects/classes to implement visit method for all the product types (which is for all existing class types).
+
+For instance, lets take example of Products. Products is an interface which is implemented by three products Physical product, Digital product and gift card. They have their own specifc logic, if we wish to introduce a new functionality like shippingcostcalculator, we will violate the OCP if we add the logic to existing class. So instead we use Visitor pattern. We create a ShippingCostVisitor class which has logic for calculating shipping cost for all the three product types. The Product interface needs to make sure each of the product subtype implements accept method (accept(ProductVisitor)), so that logic hold true.
+

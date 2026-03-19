@@ -43,3 +43,36 @@ User user = User.builder()
             .build();
             
 ```
+
+
+```java
+class BurgerMeal{
+
+    // some required params and some optional
+    // the attributes of burger object would be private and final, so once configured cannot be modified
+    private final String burgerType;
+    private final String bunType;
+    private final boolean hasSide;
+    private final boolean hasDrink;
+    private final String pattyType;
+    private BurgerMeal(BurgerBuilder builder){
+        this.burgerType=builder.burgerType;
+
+    }
+    static class BurgerBuilder{
+        private final String burgerType;
+        private final String bunType;
+        private final boolean hasSide;
+        private final boolean hasDrink;
+        private final String pattyType;
+
+        public BurgerBuilder(String burgerType, String pattyType){
+            this.burgerType=burgerType;
+            this.pattyType=pattyType
+
+        }
+
+
+    }
+}
+```
