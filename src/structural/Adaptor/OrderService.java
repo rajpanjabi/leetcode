@@ -13,5 +13,4 @@ public class OrderService {
         System.out.println("Processing order"+ orderId);
         gateway.pay(orderId, amount);
     }
-
 }

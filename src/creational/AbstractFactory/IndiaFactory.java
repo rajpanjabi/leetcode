@@ -15,6 +15,4 @@ public class IndiaFactory implements RegionFactory{
     public Invoice createInvoice(){
         return new GSTInvoice();
     }
-
-    
 }

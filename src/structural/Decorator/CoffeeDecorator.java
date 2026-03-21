@@ -8,5 +8,4 @@ public abstract class CoffeeDecorator implements Coffee{
     public CoffeeDecorator(Coffee coffee){
         this.coffee=coffee;
     }
-
 }

@@ -4,5 +4,4 @@ package structural.Decorator;
 public interface Coffee {
     int getCost();
     String getDescription();
-    
 }

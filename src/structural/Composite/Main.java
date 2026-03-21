@@ -6,7 +6,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        CartItem iphone = new Product(1500, "Iphone 17 Pro Max");
+        // CartItem iphone = new Product(1500, "Iphone 17 Pro Max");
         CartItem charger = new Product(60, "Wireless Charger");
         CartItem earphones = new Product(250, "Airpods 3");
         

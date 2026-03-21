@@ -9,12 +9,10 @@ public class USFactory implements RegionFactory{
             return new StripeGateway();
         }
     }
-
     @Override
     public Invoice createInvoice(){
         return new USInvoice();
-    }
-    
+    } 
 }
 
 

@@ -1,7 +1,6 @@
 package src.creational.Factory;
 
 public class NotificationFactory {
-
     public static Notification getNotification(String type) {
         if (type.equalsIgnoreCase("EMAIL")) {
             return new EmailNotification();
@@ -11,5 +10,4 @@ public class NotificationFactory {
         throw new IllegalArgumentException("Unknown notification type: " + type);
         }
     }
-    
 }

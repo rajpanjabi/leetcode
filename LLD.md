@@ -161,6 +161,7 @@ This technique allows developers to manage the relationships between various com
     In simple terms, instead of creating objects directly inside a class, you "inject" them from outside.
 
 ```java
+// Without dependency injection
 class OrderService {
     private InventoryService inventory = new InventoryService();
     private PaymentService payment = new RazorpayPayment();
@@ -264,6 +265,25 @@ Dependency Injection adheres to the Dependency Inversion Principle (DIP), one of
 4. Open to Extension, Closed to Modification
 This is part of the Open/Closed Principle (O in SOLID), which DI supports. By injecting dependencies, your code is open to extension (e.g., adding new payment types, notification systems, etc.) without modifying existing classes. You can extend the system by simply adding new implementations, without touching the core code.
 
+
+### Design Patterns
+
+There are 3 main categories of Design Patterns:
+
+1) Creational: These patterns mainly cater to the object creation process of object based on requirements and the scenario. There are 5 sub-types of creational design pattern:
+    1) Singleton: This pattern is used when we wish to create a single object of the Class. For instance, when dealing with DB Connections, loggers, etc. It can be implemented lazily or greedily. In Lazy loading, we save computation and resources but there can be problem with concurrency (so use synchronized keyword). In eager loading, we create the single instance/object of class in the constructor itself. 
+
+    2) Factory: This pattern is used when one class deals with multiple different types of object. For example, a Checkout Service class which can use any of the multliple payment gateways. We delegate the object creation process of the payment gateway to the factory and use the interface in the checkout class. When the payment gateway is needed we use factory to create gateway and we use it.
+
+    3) Builder: We mainly use this pattern when we have an object with a lot of fields. For example, a burger class with various attributes like burgerType, bunType, hasSide, hasDrink, list of toppings, etc. An alternate way is to create multiple constructors with different combinations (a.k.a Constructor overloading) , this works in cases with 3-4 fields, but post that it becomes difficult and code readibility is degraded. In builder pattern, we create a builder class (static inner class), we make the burger/object constructor private and we can only create the object using the builder object. 
+
+    4) Prototype: As the name suggests, we have a prototype and we can use it by cloning mulitple copies of it. It is mainly used when object creation process is very expensive and tedious. In such case, we just have a base object and then we create clones out of it. To make sure this works, our object should implement the Cloneable interface and the object class implements the clone method (nested recusrion if required)
+
+    5) Abstract Factory Method: 
+
+
+2) Structural
+3) Behavioural:
 
 
 

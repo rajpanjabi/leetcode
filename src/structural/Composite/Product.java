@@ -16,5 +16,4 @@ public class Product implements CartItem{
     public void display(){
         System.out.println("Product: "+description+" Price: "+ price);
     }
-    
 }
